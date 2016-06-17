@@ -2,19 +2,15 @@
 
 const http = require('http')
 const fs = require('fs')
-
-const hostname = 'localhost'
-const port = '8084'
+const express = require('express')()
 
 const path = '/var/git/'
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200
-    res.setHeader('Content-Type', 'text/html')
+app.get('/', (req, res) => {
     let content = '<table style="width:600px;">'
     content += generateHTML(getContent())
     content += '</table>'
-    res.end(content)
+    res.send(content)
 })
 
 function getContent() {
@@ -51,7 +47,7 @@ function generateHTML(dirs) {
     return html
 }
 
-server.listen(port, hostname, () => {
+app.listen(8084, () => {
       console.log(`Server running at http://${hostname}:${port}/`)
 })
 
