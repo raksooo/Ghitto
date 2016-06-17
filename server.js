@@ -1,20 +1,22 @@
-#!/usr/bin/env node
-
-const http = require('http')
-const fs = require('fs')
-const app = require('express')()
+const fs = require('fs'),
+      app = require('express')(),
+      serveStatic = require('serve-static'),
+      exec = require('child_process').exec
 
 const path = '/var/git/'
 
-app.get('/', (req, res) => {
-    let content = '<table style="width:600px;">'
-    content += generateHTML(getContent())
-    content += '</table>'
-    res.send(content)
+app.use("/", serveStatic(__dirname + "/static/"))
+
+app.get('/getRepos', (req, res) => {
+    res.send(JSON.stringify(getContent()))
+})
+
+app.get('/newRepo', (req, res) => {
+    res.send(JSON.stringify(newRepo(req.query.name)))
 })
 
 function getContent() {
-    let content = []
+/*    let content = []
     let dir = fs.readdirSync(path)
     dir.forEach(file => {
         try {
@@ -30,21 +32,14 @@ function getContent() {
         }
     })
 
-    return content
+    return content*/
+    return ["asdf", "qwerty"]
 }
 
-function generateHTML(dirs) {
-    let html = ''
-    dirs.forEach(dir => {
-        html += '<tr><td>'
-        html += dir
-        html += '</td><td>'
-        html += 'git@git.oskar.ninja:'
-        html += dir
-        html += '</td></tr>'
-    })
-
-    return html
+function newRepo(name) {
+    let repo = '/var/git/' + name + '.git'
+    exec('mkdir ' + repo)
+    exec('cd ' + repo + ' && git --bare init')
 }
 
 app.listen(8084, () => {
