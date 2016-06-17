@@ -48,6 +48,6 @@ function generateHTML(dirs) {
 }
 
 app.listen(8084, () => {
-      console.log(`Server running at http://${hostname}:${port}/`)
+      console.log('Listening...')
 })
 
