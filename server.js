@@ -1,7 +1,7 @@
 const fs = require('fs'),
       app = require('express')(),
       serveStatic = require('serve-static'),
-      exec = require('child_process').exec
+      execSync = require('child_process').execSync
 
 const path = '/var/git/'
 
@@ -16,7 +16,7 @@ app.get('/newRepo', (req, res) => {
 })
 
 function getContent() {
-/*    let content = []
+    let content = []
     let dir = fs.readdirSync(path)
     dir.forEach(file => {
         try {
@@ -32,14 +32,14 @@ function getContent() {
         }
     })
 
-    return content*/
-    return ["asdf", "qwerty"]
+    return content
 }
 
 function newRepo(name) {
     let repo = '/var/git/' + name + '.git'
-    exec('mkdir ' + repo)
-    exec('cd ' + repo + ' && git --bare init')
+    execSync('mkdir ' + repo)
+    execSync('cd ' + repo + ' && git --bare init')
+    execSync('chmod 700 -R ' + repo)
 }
 
 app.listen(8084, () => {
