@@ -34,9 +34,9 @@ function displayContent(repos) {
             document.createElement('td')
         ]
         td[0].innerText = repo.name;
+        td[0].onclick = replaceWithClone;
         td[1].innerText = repo.repo;
         td.forEach(function(t) {
-            t.onclick = replaceWithClone;
             tr.appendChild(t);
         });
 

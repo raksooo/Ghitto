@@ -39,6 +39,9 @@ div#repos > table {
 div#repos > table > tr > td {
     padding: 15px;
     white-space: nowrap;
+}
+
+div#repos > table > tr > td:first-child {
     cursor: pointer;
 }
 
