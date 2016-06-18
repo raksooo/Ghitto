@@ -2,12 +2,27 @@
 <html>
 <head>
     <title>🤗💀👼💂💸⚗⛓🔆</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,400" rel="stylesheet" />
     <link rel="stylesheet" href="/styles.css" />
     <script src="/script.js"></script>
 </head>
-<body>
-    <a href="#" onclick="newRepo();">+</a>
-    <table>
-    </table>
+<body onclick="removeClone();">
+    <div id="guide">
+        <span id="closeGuide" onclick="hideGuide();">X</span>
+        <h2>Repository created!</h2>
+        <ul>
+            <li>mkdir <span class="repoName"></span></li>
+            <li>cd <span class="repoName"></span></li>
+            <li>git init</li>
+            <li>git add .</li>
+            <li>git commit -m "Initial commit"</li>
+            <li>git remote add origin <span class="repoUrl"></span></li>
+            <li>git push -u orgin master</li>
+        </ul>
+    </div>
+    <div id="repos">
+        <div id="newRepo" onclick="newRepo();"><span id="plusSign">+</span> Create new repository</div>
+        <table></table>
+    </div>
 </body>
 </html>

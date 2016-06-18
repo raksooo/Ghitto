@@ -1,5 +1,98 @@
-#table {
-    width: 400px;
-    margin: 0 auto;
+* {
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 200;
+}
+
+html, body {
+    height: 100%;
+}
+
+div#repos, div#guide {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+div#repos {
+    min-width: 700px;
+}
+
+div#repos > div#newRepo {
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    font-size: 1.3rem;
+    padding: 15px;
+    background-color: #2ecc71;
+    border: 1px #777777 solid;
+    border-bottom: 0;
+}
+
+div#repos > table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px #777777 solid;
+    border-top: 0;
+}
+
+div#repos > table > tr > td {
+    padding: 15px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+div#repos > table > tr > td:first-child:not(:last-child) {
+    width: 170px;
+    font-weight: 400;
+}
+
+div#repos > table > tr:nth-child(odd) {
+    background-color: #cfe5cf;
+}
+
+div#repos > table > tr:nth-child(even) {
+    background-color: #eef5ee;
+}
+
+div#repos > table > tr > td.clone {
+    text-align: center;
+}
+
+div#guide {
+    display: none;
+    z-index: 1;
+    background: #f8f8f8;
+    padding: 25px 120px;
+    border: 1px grey solid;
+}
+
+div#guide.show {
+    display: block;
+}
+
+div#guide span#closeGuide {
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    cursor: pointer;
+}
+
+div#guide ul {
+    list-style: none;
+    margin-left: 0.6em;
+    padding-left: 1.2em;
+    text-indent: -1.2em;
+}
+
+div#guide ul li:before {
+    content: "$";
+    display: block;
+    float: left;
+    width: 1.2em;
+}
+
+div#guide ul li {
+    white-space: nowrap;
 }
 

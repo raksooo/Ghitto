@@ -4,6 +4,7 @@ const fs = require('fs'),
       execSync = require('child_process').execSync
 
 const path = '/var/git/'
+const ssh = 'git@git.oskarnyberg.com:'
 
 app.use("/", serveStatic(__dirname + "/static/"))
 
@@ -24,7 +25,7 @@ function getContent() {
             if (stat.isDirectory()) {
                 try {
                     fs.statSync(path + file + '/HEAD')
-                    content.push(file)
+                    content.push(formatResponse(file))
                 } catch (e) {
                 }
             }
@@ -35,11 +36,30 @@ function getContent() {
     return content
 }
 
+function formatResponse(dirName) {
+    let name
+    if (dirName.indexOf('.git') !== -1) {
+        name = dirName.substr(0, dirName.lastIndexOf('.git'))
+    } else {
+        name = dirName
+    }
+    let repo = ssh + name + '.git'
+    let clone = 'git clone ' + repo
+    return {name, repo, clone}
+}
+
 function newRepo(name) {
     let repo = '/var/git/' + name + '.git'
-    execSync('mkdir ' + repo)
-    execSync('cd ' + repo + ' && git --bare init')
-    execSync('chmod 700 -R ' + repo)
+    try {
+        let a = fs.lstatSync(repo)
+        return {error: 'Repo already exists.'}
+    } catch(e) {
+        execSync('mkdir ' + repo)
+        execSync('cd ' + repo + ' && git --bare init')
+        execSync('chmod 700 -R ' + repo)
+
+        return formatResponse(name)
+    }
 }
 
 app.listen(8084, () => {
