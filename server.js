@@ -1,9 +1,12 @@
+#!/usr/bin/env node
+
 const fs = require('fs'),
       app = require('express')(),
       serveStatic = require('serve-static'),
       execSync = require('child_process').execSync
 
-const path = '/var/git/'
+const port = parseInt(process.argv[2])
+const path = process.argv[3]
 const ssh = 'git@git.oskarnyberg.com:'
 
 app.use("/", serveStatic(__dirname + "/static/"))
@@ -76,7 +79,7 @@ function newRepo(path, name) {
     }
 }
 
-app.listen(8084, () => {
+app.listen(port, () => {
       console.log('Listening...')
 })
 
