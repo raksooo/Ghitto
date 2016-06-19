@@ -5,6 +5,7 @@
 
 html, body {
     height: 100%;
+    margin: 0;
 }
 
 div#directories {
@@ -13,6 +14,7 @@ div#directories {
     left: 0;
     width: 100%;
     padding: 3px;
+    box-sizing: border-box;
 }
 
 div#directories span {
