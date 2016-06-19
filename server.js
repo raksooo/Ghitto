@@ -9,47 +9,61 @@ const ssh = 'git@git.oskarnyberg.com:'
 app.use("/", serveStatic(__dirname + "/static/"))
 
 app.get('/getRepos', (req, res) => {
-    res.send(JSON.stringify(getContent()))
+    let relative = req.query.path || ''
+    res.send(JSON.stringify(getContent(relative)))
 })
 
 app.get('/newRepo', (req, res) => {
-    res.send(JSON.stringify(newRepo(req.query.name)))
+    let path = req.query.path
+    let name = req.query.name
+    let repo = newRepo(path, name)
+    res.send(JSON.stringify(repo))
 })
 
-function getContent() {
-    let content = []
-    let dir = fs.readdirSync(path)
+function getContent(relative) {
+    if (relative.indexOf('..') !== -1) {
+        relative = '';
+    }
+
+    let currentPath = path + relative
+    let gitDirs = []
+    let otherDirs = []
+
+    let dir = fs.readdirSync(currentPath)
     dir.forEach(file => {
         try {
-            let stat = fs.statSync(path + file)
+            let stat = fs.statSync(currentPath + file)
             if (stat.isDirectory()) {
                 try {
-                    fs.statSync(path + file + '/HEAD')
-                    content.push(formatResponse(file))
+                    fs.statSync(currentPath + file + '/HEAD')
+                    gitDirs.push(formatResponse(relative, file))
                 } catch (e) {
+                    if (file.charAt(0) !== '.') {
+                        otherDirs.push(file)
+                    }
                 }
             }
         } catch (e) {
         }
     })
 
-    return content
+    return {git: gitDirs, other: otherDirs}
 }
 
-function formatResponse(dirName) {
+function formatResponse(path, dirName) {
     let name
     if (dirName.indexOf('.git') !== -1) {
         name = dirName.substr(0, dirName.lastIndexOf('.git'))
     } else {
         name = dirName
     }
-    let repo = ssh + name + '.git'
+    let repo = ssh + path + name + '.git'
     let clone = 'git clone ' + repo
     return {name, repo, clone}
 }
 
-function newRepo(name) {
-    let repo = '/var/git/' + name + '.git'
+function newRepo(path, name) {
+    let repo = '/var/git/' + path + name + '.git'
     try {
         let a = fs.lstatSync(repo)
         return {error: 'Repo already exists.'}
@@ -58,7 +72,7 @@ function newRepo(name) {
         execSync('cd ' + repo + ' && git --bare init')
         execSync('chmod 700 -R ' + repo)
 
-        return formatResponse(name)
+        return formatResponse(path, name)
     }
 }
 

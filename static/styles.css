@@ -7,11 +7,26 @@ html, body {
     height: 100%;
 }
 
+div#directories {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 3px;
+}
+
+div#directories span {
+    cursor: pointer;
+    padding: 0 10px;
+    color: #3333dd;
+    font-weight: 400;
+}
+
 div#repos, div#guide {
     position: absolute;
-    top: 40%;
+    top: 50px;
     left: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%);
 }
 
 div#repos {

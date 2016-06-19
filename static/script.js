@@ -1,22 +1,34 @@
-window.onload = fillTable;
+window.onload = function() {
+    fillTable();
+};
 
 var replacedTr;
 var replacedTds = [];
 
-function fillTable() {
-    emptyTable();
-    var repos = retrieveContnent(function(repos) {
-        displayContent(repos);
+var currentDir = '';
+
+function fillTable(relative) {
+    if (typeof relative === 'undefined') {
+        relative = currentDir;
+    }
+    currentDir = relative;
+
+    clear();
+    retrieveContnent(function(content) {
+        displayContent(content.git);
+        displayDirs(content.other, relative.length > 0);
     });
 }
 
-function emptyTable() {
+function clear() {
+    document.querySelector('div#directories').innerHTML = '';
     document.querySelector('table').innerHTML = '';
 }
 
 function retrieveContnent(callback) {
     var request = new XMLHttpRequest();
-    request.open('GET', '/getRepos', true);
+    request.open('GET', '/getRepos?path=' + encodeURIComponent(currentDir)
+            , true);
 
     request.onload = function() {
         if (this.status === 200) {
@@ -24,6 +36,24 @@ function retrieveContnent(callback) {
         }
     };
     request.send();
+}
+
+function displayDirs(dirs, notRoot) {
+    if (notRoot) {
+        var a = document.createElement('span');
+        a.textContent = '..';
+        var _current = currentDir.slice(0, -1);
+        _current = _current.substr(0, _current.lastIndexOf('/') + 1);
+        a.onclick = fillTable.bind(this, _current);
+        document.querySelector('#directories').appendChild(a);
+    }
+
+    dirs.forEach(function(dir) {
+        var a = document.createElement('span');
+        a.textContent = dir;
+        a.onclick = fillTable.bind(this, currentDir + dir + '/');
+        document.querySelector('#directories').appendChild(a);
+    });
 }
 
 function displayContent(repos) {
@@ -48,7 +78,8 @@ function newRepo() {
     var name = prompt('name:');
     if (name !== null) {
         var request = new XMLHttpRequest();
-        request.open('GET', '/newRepo?name=' + name, true);
+        request.open('GET', '/newRepo?path=' + encodeURIComponent(currentDir)
+                + '&name=' + name, true);
 
         request.onload = function() {
             if (this.status >= 200 && this.status < 400) {
