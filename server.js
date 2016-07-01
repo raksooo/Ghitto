@@ -7,7 +7,7 @@ const fs = require('fs'),
 
 const port = parseInt(process.argv[2])
 const path = process.argv[3]
-const ssh = 'git@git.oskarnyberg.com:'
+const ssh = 'git@oskarnyberg.com:'
 
 app.use("/", serveStatic(__dirname + "/static/"))
 
@@ -65,8 +65,8 @@ function formatResponse(path, dirName) {
     return {name, repo, clone}
 }
 
-function newRepo(path, name) {
-    let repo = '/var/git/' + path + name + '.git'
+function newRepo(relative, name) {
+    let repo = path + relative + name + '.git'
     try {
         let a = fs.lstatSync(repo)
         return {error: 'Repo already exists.'}
@@ -75,7 +75,7 @@ function newRepo(path, name) {
         execSync('cd ' + repo + ' && git --bare init')
         execSync('chmod 700 -R ' + repo)
 
-        return formatResponse(path, name)
+        return formatResponse(relative, name)
     }
 }
 
