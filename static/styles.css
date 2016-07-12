@@ -1,5 +1,26 @@
+:root {
+    --link-color: #0066ff;
+}
+
+* {
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 300;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 div#guide {
     display: none;
+}
+
+span[onclick] {
+    color: var(--link-color);
+    cursor: pointer;
+}
+
+span[onclick]:hover {
+    color: white;
+    background: var(--link-color);
 }
 
 nav#directories {
@@ -14,13 +35,14 @@ nav#directories span {
 }
 
 table {
-    width: 50%;
+    width: 100%;
     border-collapse: collapse;
     margin: 70px auto;
 }
 
 table tr:first-child td {
     padding-bottom: 1rem;
+    font-weight: 400;
 }
 
 table tr td {
@@ -28,18 +50,25 @@ table tr td {
 }
 
 table tr td:first-child {
-    width: 45%;
+    width: 41%;
     text-align: right;
-    border-right: 1px blue solid;
+    border-right: 1px var(--link-color) solid;
 }
 
 table tr td:last-child {
-    width: 55%;
+    width: 59%;
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+table tr td:last-child::selection {
+    background: var(--link-color);
+    color: white;
 }
 
 table h1 {
     margin: 0;
     font-size: 1rem;
-    font-weight: normal;
+    font-weight: inherit;
 }
 

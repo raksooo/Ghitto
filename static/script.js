@@ -44,6 +44,7 @@ function displayDirs(dirs, notRoot) {
     if (notRoot) {
         var a = document.createElement('span');
         a.textContent = '..';
+        a.setAttribute('onclick', ';');
         var _current = currentDir.slice(0, -1);
         _current = _current.substr(0, _current.lastIndexOf('/') + 1);
         a.onclick = fillTable.bind(this, _current);
@@ -53,6 +54,7 @@ function displayDirs(dirs, notRoot) {
     dirs.forEach(function(dir) {
         var a = document.createElement('span');
         a.textContent = dir;
+        a.setAttribute('onclick', ';');
         a.onclick = fillTable.bind(this, currentDir + dir + '/');
         document.querySelector('nav#directories').appendChild(a);
     });
@@ -65,8 +67,11 @@ function displayContent(repos) {
             document.createElement('td'),
             document.createElement('td')
         ]
-        td[0].innerText = repo.name;
-        td[0].onclick = replaceWithClone;
+        let span = document.createElement('span');
+        span.innerText = repo.name;
+        span.setAttribute('onclick', ';');
+        span.onclick = replaceWithClone;
+        td[0].appendChild(span);
         td[1].innerText = repo.repo;
         td.forEach(function(t) {
             tr.appendChild(t);
@@ -117,7 +122,7 @@ function hideGuide() {
 
 function replaceWithClone(e) {
     e.stopPropagation();
-    let td = e.path[1].lastChild;
+    let td = e.path[2].lastChild;
     if (replacedTd !== td) {
         removeClone();
 
