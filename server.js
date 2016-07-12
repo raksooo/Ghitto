@@ -7,7 +7,7 @@ const fs = require('fs'),
 
 const port = parseInt(process.argv[2])
 const path = process.argv[3]
-const ssh = 'git@oskarnyberg.com:'
+const ssh = process.argv[4]
 
 app.use("/", serveStatic(__dirname + "/static/"))
 
