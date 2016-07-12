@@ -2,8 +2,8 @@ window.onload = function() {
     fillTable();
 };
 
-var replacedTr;
-var replacedTds = [];
+var replacedTd;
+var replacedText;
 
 var currentDir = '';
 
@@ -22,7 +22,9 @@ function fillTable(relative) {
 
 function clear() {
     document.querySelector('div#directories').innerHTML = '';
-    document.querySelector('table').innerHTML = '';
+    document.querySelectorAll('table tr:not(:first-child)').forEach(element => {
+        element.parentNode.removeChild(element);
+    })
 }
 
 function retrieveContnent(callback) {
@@ -115,33 +117,26 @@ function hideGuide() {
 
 function replaceWithClone(e) {
     e.stopPropagation();
-    removeClone();
+    let td = e.path[1].lastChild;
+    if (replacedTd !== td) {
+        removeClone();
 
-    var tr = replacedTr = e.path[1];
-    var repo = tr.lastChild.textContent;
-    var clone  = 'git clone ' + repo;
-
-    var td = document.createElement('td');
-    td.setAttribute('colspan', '2');
-    td.classList.add('clone');
-    td.textContent = clone;
-
-    var children = tr.children;
-    while (children.length > 0) {
-        var child = children[0];
-        replacedTds.push(child);
-        tr.removeChild(child);
+        replacedTd = td;
+        replacedText = replacedTd.textContent;
+        replacedTd.textContent = 'git clone ' + replacedText;
+        replacedTd.classList.add('clone');
+        selectText(replacedTd);
+    } else {
+        removeClone();
     }
-    tr.appendChild(td);
-    selectText(td);
 }
 
 function removeClone(e) {
-    if (replacedTds.length > 0) {
-        replacedTr.removeChild(replacedTr.children[0]);
-        while (replacedTds.length) {
-            replacedTr.appendChild(replacedTds.shift());
-        }
+    if (replacedTd) {
+        replacedTd.classList.remove('clone');
+        replacedTd.textContent = replacedText;
+        delete replacedTd;
+        delete replacedText;
     }
 }
 
