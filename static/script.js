@@ -21,7 +21,7 @@ function fillTable(relative) {
 }
 
 function clear() {
-    document.querySelector('div#directories').innerHTML = '';
+    document.querySelector('nav#directories').innerHTML = '';
     document.querySelectorAll('table tr:not(:first-child)').forEach(element => {
         element.parentNode.removeChild(element);
     })
@@ -47,14 +47,14 @@ function displayDirs(dirs, notRoot) {
         var _current = currentDir.slice(0, -1);
         _current = _current.substr(0, _current.lastIndexOf('/') + 1);
         a.onclick = fillTable.bind(this, _current);
-        document.querySelector('#directories').appendChild(a);
+        document.querySelector('nav#directories').appendChild(a);
     }
 
     dirs.forEach(function(dir) {
         var a = document.createElement('span');
         a.textContent = dir;
         a.onclick = fillTable.bind(this, currentDir + dir + '/');
-        document.querySelector('#directories').appendChild(a);
+        document.querySelector('nav#directories').appendChild(a);
     });
 }
 

@@ -2,6 +2,17 @@ div#guide {
     display: none;
 }
 
+nav#directories {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 7px 20px;
+}
+
+nav#directories span {
+    margin-right: 15px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
