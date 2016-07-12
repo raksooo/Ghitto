@@ -14,8 +14,13 @@ nav#directories span {
 }
 
 table {
-    width: 100%;
+    width: 50%;
     border-collapse: collapse;
+    margin: 70px auto;
+}
+
+table tr:first-child td {
+    padding-bottom: 1rem;
 }
 
 table tr td {
@@ -30,5 +35,11 @@ table tr td:first-child {
 
 table tr td:last-child {
     width: 55%;
+}
+
+table h1 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: normal;
 }
 
