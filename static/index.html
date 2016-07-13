@@ -9,7 +9,6 @@
 <body onclick="removeClone();">
     <nav id="directories"></nav>
     <div id="guide">
-        <span id="closeGuide" onclick="hideGuide();">X</span>
         <h2>Repository created!</h2>
         <ul>
             <li>mkdir <span class="repoName"></span></li>
@@ -20,12 +19,15 @@
             <li>git remote add origin <span class="repoUrl"></span></li>
             <li>git push -u orgin master</li>
         </ul>
+        <div id="closeGuide">
+            <span onclick="hideGuide();">Thanks!</span>
+        </div>
     </div>
     <table>
         <tr>
             <td>
                 <h1>
-                    GIT repositories
+                    Repositories
                 </h1>
             </td>
             <td>

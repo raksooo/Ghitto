@@ -2,10 +2,10 @@ window.onload = function() {
     fillTable();
 };
 
-var replacedTd;
-var replacedText;
+let replacedTd;
+let replacedText;
 
-var currentDir = '';
+let currentDir = '';
 
 function fillTable(relative) {
     if (typeof relative === 'undefined') {
@@ -14,9 +14,9 @@ function fillTable(relative) {
     currentDir = relative;
 
     clear();
-    retrieveContnent(function(content) {
-        displayContent(content.git);
-        displayDirs(content.other, relative.length > 0);
+    retrieveContnent(({git, other}) => {
+        displayContent(git);
+        displayDirs(other, relative.length > 0);
     });
 }
 
@@ -28,7 +28,7 @@ function clear() {
 }
 
 function retrieveContnent(callback) {
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
     request.open('GET', '/getRepos?path=' + encodeURIComponent(currentDir)
             , true);
 
@@ -42,17 +42,17 @@ function retrieveContnent(callback) {
 
 function displayDirs(dirs, notRoot) {
     if (notRoot) {
-        var a = document.createElement('span');
+        let a = document.createElement('span');
         a.textContent = '..';
         a.setAttribute('onclick', ';');
-        var _current = currentDir.slice(0, -1);
+        let _current = currentDir.slice(0, -1);
         _current = _current.substr(0, _current.lastIndexOf('/') + 1);
         a.onclick = fillTable.bind(this, _current);
         document.querySelector('nav#directories').appendChild(a);
     }
 
-    dirs.forEach(function(dir) {
-        var a = document.createElement('span');
+    dirs.forEach(dir => {
+        let a = document.createElement('span');
         a.textContent = dir;
         a.setAttribute('onclick', ';');
         a.onclick = fillTable.bind(this, currentDir + dir + '/');
@@ -61,19 +61,19 @@ function displayDirs(dirs, notRoot) {
 }
 
 function displayContent(repos) {
-    repos.forEach(function(repo) {
-        var tr = document.createElement('tr');
-        var td = [
+    repos.forEach(({name, repo}) => {
+        let tr = document.createElement('tr');
+        let td = [
             document.createElement('td'),
             document.createElement('td')
         ]
         let span = document.createElement('span');
-        span.innerText = repo.name;
+        span.innerText = name;
         span.setAttribute('onclick', ';');
         span.onclick = replaceWithClone;
         td[0].appendChild(span);
-        td[1].innerText = repo.repo;
-        td.forEach(function(t) {
+        td[1].innerText = repo;
+        td.forEach(t => {
             tr.appendChild(t);
         });
 
@@ -82,15 +82,15 @@ function displayContent(repos) {
 }
 
 function newRepo() {
-    var name = prompt('name:');
+    let name = prompt('name:');
     if (name !== null) {
-        var request = new XMLHttpRequest();
+        let request = new XMLHttpRequest();
         request.open('GET', '/newRepo?path=' + encodeURIComponent(currentDir)
                 + '&name=' + name, true);
 
         request.onload = function() {
             if (this.status >= 200 && this.status < 400) {
-                var response = JSON.parse(this.response);
+                let response = JSON.parse(this.response);
                 if (!response.error) {
                     fillTable();
                     fillGuide(response);
@@ -103,14 +103,14 @@ function newRepo() {
     }
 }
 
-function fillGuide(repo) {
-    var nameContainers = document.querySelectorAll('.repoName');
-    var urlContainers = document.querySelectorAll('.repoUrl');
-    nameContainers.forEach(function(container) {
-        container.textContent = repo.name;
+function fillGuide({name, repo, clone}) {
+    let nameContainers = document.querySelectorAll('.repoName');
+    let urlContainers = document.querySelectorAll('.repoUrl');
+    nameContainers.forEach(container => {
+        container.textContent = name;
     });
-    urlContainers.forEach(function(container) {
-        container.textContent = repo.repo;
+    urlContainers.forEach(container => {
+        container.textContent = repo;
     });
 
     document.querySelector('#guide').classList.add('show');
@@ -138,21 +138,21 @@ function replaceWithClone(e) {
 
 function removeClone(e) {
     if (replacedTd) {
+        clearSelection();
         replacedTd.classList.remove('clone');
         replacedTd.textContent = replacedText;
-        delete replacedTd;
-        delete replacedText;
+        replacedTd = undefined;
+        replacedText = undefined;
     }
 }
 
 function selectText(element) {
-    clearSelection();
 	if (document.selection) {
-		var range = document.body.createTextRange();
+		let range = document.body.createTextRange();
 		range.moveToElementText(element);
 		range.select();
 	} else if (window.getSelection) {
-		var range = document.createRange();
+		let range = document.createRange();
 		range.selectNode(element);
 		window.getSelection().addRange(range);
 	}

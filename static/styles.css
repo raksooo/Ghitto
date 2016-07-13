@@ -9,8 +9,59 @@
     user-select: none;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 div#guide {
     display: none;
+    position: absolute;
+    width: 800px;
+    height: 100%;
+    box-sizing: border-box;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 1;
+    background: white;
+    padding: 100px;
+}
+
+div#guide.show {
+    display: block;
+}
+
+div#guide div#closeGuide {
+    text-align: center;
+    margin-top: 30px;
+}
+
+div#guide ul {
+    list-style: none;
+    margin-left: 0.6em;
+    padding-left: 1.2em;
+    text-indent: -1.2em;
+}
+
+div#guide ul li:before {
+    content: "$";
+    display: block;
+    float: left;
+    width: 1.2em;
+}
+
+div#guide ul li {
+    white-space: nowrap;
+}
+
+div#guide ul li span {
+    color: var(--link-color);
+}
+
+div#guide ul * {
+    -webkit-user-select: text;
+    user-select: text;
 }
 
 span[onclick] {
@@ -35,14 +86,19 @@ nav#directories span {
 }
 
 table {
+    position: relative;
+    top: 70px;
     width: 100%;
     border-collapse: collapse;
-    margin: 70px auto;
 }
 
 table tr:first-child td {
     padding-bottom: 1rem;
     font-weight: 400;
+}
+
+table tr:first-child td span {
+    font-weight: inherit;
 }
 
 table tr td {
