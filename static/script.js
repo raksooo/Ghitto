@@ -1,5 +1,5 @@
 window.onload = function() {
-    fillTable();
+    loadContent();
 };
 
 let replacedTd;
@@ -7,7 +7,7 @@ let replacedText;
 
 let currentDir = '';
 
-function fillTable(relative) {
+function loadContent(relative) {
     if (typeof relative === 'undefined') {
         relative = currentDir;
     }
@@ -17,6 +17,7 @@ function fillTable(relative) {
     retrieveContnent(({git, other}) => {
         displayContent(git);
         displayDirs(other, relative.length > 0);
+        displayPath();
     });
 }
 
@@ -47,7 +48,7 @@ function displayDirs(dirs, notRoot) {
         a.setAttribute('onclick', ';');
         let _current = currentDir.slice(0, -1);
         _current = _current.substr(0, _current.lastIndexOf('/') + 1);
-        a.onclick = fillTable.bind(this, _current);
+        a.onclick = loadContent.bind(this, _current);
         document.querySelector('nav#directories').appendChild(a);
     }
 
@@ -55,7 +56,7 @@ function displayDirs(dirs, notRoot) {
         let a = document.createElement('span');
         a.textContent = dir;
         a.setAttribute('onclick', ';');
-        a.onclick = fillTable.bind(this, currentDir + dir + '/');
+        a.onclick = loadContent.bind(this, currentDir + dir + '/');
         document.querySelector('nav#directories').appendChild(a);
     });
 }
@@ -92,7 +93,7 @@ function newRepo() {
             if (this.status >= 200 && this.status < 400) {
                 let response = JSON.parse(this.response);
                 if (!response.error) {
-                    fillTable();
+                    loadContent();
                     fillGuide(response);
                 } else {
                     alert(response.error);
@@ -164,5 +165,9 @@ function clearSelection() {
     } else if ( window.getSelection ) {
         window.getSelection().removeAllRanges();
     }
+}
+
+function displayPath() {
+    document.querySelector('div#path').textContent = '/' + currentDir;
 }
 
