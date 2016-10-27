@@ -46,8 +46,7 @@ function getContent(relative) {
                     }
                 }
             }
-        } catch (e) {
-        }
+        } catch (e) { }
     })
 
     return {git: gitDirs, other: otherDirs}
