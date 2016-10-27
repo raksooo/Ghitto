@@ -6,8 +6,12 @@ const fs = require('fs'),
       execSync = require('child_process').execSync
 
 const port = parseInt(process.argv[2])
-const path = process.argv[3]
+let path = process.argv[3]
 const ssh = process.argv[4]
+
+if (path.slice(-1) !== '/') {
+    path += '/'
+}
 
 app.use("/", serveStatic(__dirname + "/static/"))
 
@@ -25,7 +29,7 @@ app.get('/newRepo', (req, res) => {
 
 function getContent(relative) {
     if (relative.indexOf('..') !== -1) {
-        relative = '';
+        relative = ''
     }
 
     let currentPath = path + relative
@@ -59,7 +63,7 @@ function formatResponse(path, dirName) {
     } else {
         name = dirName
     }
-    let repo = ssh + path + name + '.git'
+    let repo = ssh + ':' + path + name + '.git'
     let clone = 'git clone ' + repo
     return {name, repo, clone}
 }
@@ -79,6 +83,6 @@ function newRepo(relative, name) {
 }
 
 app.listen(port, () => {
-      console.log('Listening...')
+    console.log('Listening...')
 })
 
