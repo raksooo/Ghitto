@@ -9,13 +9,13 @@ npm install -g ghitto
 # Usage
 Start with:
 ```sh
-./server.js <port> <path> <ssh login>
+ghitto <port> <path> <ssh login>
 ```
 where \<port\> represents the port to run the webserver on, \<path\> is the path to the directory containing the git repositories, and \<ssh login\> is the username and domain used to clone.
 
 For example:
 ```sh
-./server.js 80 /var/git user@example.com
+ghitto 80 /var/git user@example.com
 ```
 
 # Screenshots
