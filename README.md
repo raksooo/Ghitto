@@ -6,7 +6,7 @@ Start with:
 ```sh
 ./server.js <port> <path> <ssh login>
 ```
-where <port> represents the port to run the webserver on, <path> is the path to the directory containing the git repositories, and <ssh login> is the username and domain used to clone.
+where \<port\> represents the port to run the webserver on, \<path\> is the path to the directory containing the git repositories, and \<ssh login\> is the username and domain used to clone.
 
 For example:
 ```sh
@@ -14,8 +14,8 @@ For example:
 ```
 
 # Screenshots
-![Repository created](https://raw.githubusercontent.com/raksooo/ghitto/master/screenshots/repoCreated.png =250x)
-![Overview](https://raw.githubusercontent.com/raksooo/ghitto/master/screenshots/overview.png =250x)
-![Hovering](https://raw.githubusercontent.com/raksooo/ghitto/master/screenshots/hover.png =250x)
-![Cloning](https://raw.githubusercontent.com/raksooo/ghitto/master/screenshots/click.png =250x)
+<img src="./screenshots/repoCreated.png" width="400" />
+<img src="./screenshots/overview.png" width="400" />
+<img src="./screenshots/hover.png" width="400" />
+<img src="./screenshots/click.png" width="400" />
 
