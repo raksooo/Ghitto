@@ -1,5 +1,5 @@
 # Ghitto
-Ghitto is a simple git repository manager. It allows you to create repositories and helps you with simple tasks such as cloning and initing.
+Ghitto is a minimalistic git repository manager. It allows you to create repositories and helps you with simple tasks such as cloning and initing.
 
 # Usage
 Start with:
