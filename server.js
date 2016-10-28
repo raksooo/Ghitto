@@ -1,19 +1,11 @@
-#!/usr/bin/env node
-
 const fs = require('fs'),
       app = require('express')(),
       serveStatic = require('serve-static'),
       execSync = require('child_process').execSync
 
-const port = parseInt(process.argv[2])
-let path = process.argv[3]
-const ssh = process.argv[4]
-
-if (path.slice(-1) !== '/') {
-    path += '/'
-}
-
 app.use("/", serveStatic(__dirname + "/static/"))
+
+let path, ssh
 
 app.get('/getRepos', (req, res) => {
     let relative = req.query.path || ''
@@ -82,7 +74,13 @@ function newRepo(relative, name) {
     }
 }
 
-app.listen(port, () => {
-    console.log('Listening...')
-})
+function start(port, _path, _ssh) {
+    path = _path
+    ssh = _ssh
+    app.listen(port, () => {
+        console.log('Listening...')
+    })
+}
+
+module.exports = start
 
