@@ -14,8 +14,8 @@ For example:
 ```
 
 # Screenshots
-![Repository created](https://raw.githubusercontent.com/raksooo/ghitto/master/screenshots/repoCreated.png)
-![Overview](https://raw.githubusercontent.com/raksooo/ghitto/master/screenshots/overview.png)
-![Hovering](https://raw.githubusercontent.com/raksooo/ghitto/master/screenshots/hover.png)
-![Cloning](https://raw.githubusercontent.com/raksooo/ghitto/master/screenshots/click.png)
+![Repository created](https://raw.githubusercontent.com/raksooo/ghitto/master/screenshots/repoCreated.png =250x)
+![Overview](https://raw.githubusercontent.com/raksooo/ghitto/master/screenshots/overview.png =250x)
+![Hovering](https://raw.githubusercontent.com/raksooo/ghitto/master/screenshots/hover.png =250x)
+![Cloning](https://raw.githubusercontent.com/raksooo/ghitto/master/screenshots/click.png =250x)
 
