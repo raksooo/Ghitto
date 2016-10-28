@@ -1,20 +1,31 @@
 {
-  "name": "git-overview",
+  "name": "ghitto",
   "version": "1.0.0",
-  "description": "",
+  "description": "Minimalistic git repository manager",
   "main": "server.js",
+  "dependencies": {
+    "express": "^4.14.0",
+    "serve-static": "^1.11.1"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git@git.oskarnyberg.com:overview.git"
+    "url": "git+https://github.com/raksooo/Ghitto.git"
   },
+  "keywords": [
+    "minimalistic",
+    "git",
+    "repository",
+    "manager"
+  ],
   "author": "Oskar Nyberg",
-  "license": "ISC",
-  "devDependencies": {
-    "express": "^4.14.0",
-    "serve-static": "^1.11.1"
-  }
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raksooo/Ghitto/issues"
+  },
+  "homepage": "https://github.com/raksooo/Ghitto#readme"
 }
