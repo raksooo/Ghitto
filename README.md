@@ -1,6 +1,11 @@
 # Ghitto
 Ghitto is a minimalistic git repository manager. It allows you to create repositories and helps you with simple tasks such as cloning and initing.
 
+# Install
+```sh
+npm install -g ghitto
+```
+
 # Usage
 Start with:
 ```sh
