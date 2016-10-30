@@ -43,22 +43,26 @@ function retrieveContnent(callback) {
 
 function displayDirs(dirs, notRoot) {
     if (notRoot) {
-        let a = document.createElement('span');
-        a.textContent = '..';
-        a.setAttribute('onclick', ';');
         let _current = currentDir.slice(0, -1);
         _current = _current.substr(0, _current.lastIndexOf('/') + 1);
-        a.onclick = loadContent.bind(this, _current);
-        document.querySelector('nav#directories').appendChild(a);
+        let onclick = loadContent.bind(this, _current);
+        addNavLink('..', onclick);
     }
 
     dirs.forEach(dir => {
-        let a = document.createElement('span');
-        a.textContent = dir;
-        a.setAttribute('onclick', ';');
-        a.onclick = loadContent.bind(this, currentDir + dir + '/');
-        document.querySelector('nav#directories').appendChild(a);
+        let onclick = loadContent.bind(this, currentDir + dir + '/');
+        addNavLink(dir, onclick);
     });
+
+    addNavLink('+', newDirectory)
+}
+
+function addNavLink(text, onclick) {
+    let a = document.createElement('span');
+    a.textContent = text;
+    a.setAttribute('onclick', ';');
+    a.onclick = onclick;
+    document.querySelector('nav#directories').appendChild(a);
 }
 
 function displayContent(repos) {
@@ -98,6 +102,22 @@ function newRepo() {
                 } else {
                     alert(response.error);
                 }
+            }
+        };
+        request.send();
+    }
+}
+
+function newDirectory() {
+    let name = prompt('name:');
+    if (name !== null) {
+        let request = new XMLHttpRequest();
+        request.open('GET', '/newDirectory?path=' + encodeURIComponent(currentDir)
+                + '&name=' + name, true);
+
+        request.onload = function() {
+            if (this.status >= 200 && this.status < 400) {
+                loadContent();
             }
         };
         request.send();
@@ -148,15 +168,15 @@ function removeClone(e) {
 }
 
 function selectText(element) {
-	if (document.selection) {
-		let range = document.body.createTextRange();
-		range.moveToElementText(element);
-		range.select();
-	} else if (window.getSelection) {
-		let range = document.createRange();
-		range.selectNode(element);
-		window.getSelection().addRange(range);
-	}
+    if (document.selection) {
+        let range = document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+    } else if (window.getSelection) {
+        let range = document.createRange();
+        range.selectNode(element);
+        window.getSelection().addRange(range);
+    }
 }
 
 function clearSelection() {

@@ -19,6 +19,13 @@ app.get('/newRepo', (req, res) => {
     res.send(JSON.stringify(repo))
 })
 
+app.get('/newDirectory', (req, res) => {
+    let path = req.query.path
+    let name = req.query.name
+    newDirectory(path, name)
+    res.end()
+})
+
 function getContent(relative) {
     if (relative.indexOf('..') !== -1) {
         relative = ''
@@ -71,6 +78,17 @@ function newRepo(relative, name) {
         execSync('chmod 700 -R ' + repo)
 
         return formatResponse(relative, name)
+    }
+}
+
+function newDirectory(relative, name) {
+    let repo = path + relative + name
+    try {
+        let a = fs.lstatSync(repo)
+        return {error: 'Directory already exists.'}
+    } catch(e) {
+        execSync('mkdir ' + repo)
+        execSync('chmod 700 -R ' + repo)
     }
 }
 
