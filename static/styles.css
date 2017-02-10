@@ -135,3 +135,11 @@ table h1 {
     font-weight: inherit;
 }
 
+.writeaction {
+    display: none;
+}
+
+.writeaction.show {
+    display: initial;
+}
+

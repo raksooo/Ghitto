@@ -9,18 +9,20 @@ npm install -g ghitto
 # Usage
 Start with:
 ```sh
-ghitto <port> <path> <ssh login>
+ghitto <port> <path> <ssh> [<read-only>]
 ```
-where \<port\> represents the port to run the webserver on, \<path\> is the path to the directory containing the git repositories, and \<ssh login\> is the username and domain used to clone.
+where \<port\> represents the port to run the webserver on, \<path\> is the path to the directory containing the git repositories, and \<ssh login\> is the username and domain used to clone. \<read-only\> is a boolean which disables the possibility to add repositiories and directiories (default is false).
 
 For example:
 ```sh
-ghitto 80 /var/git user@example.com
+ghitto 80 /var/git git@example.com
+
+ghitto 80 /var/git git@example.com true
 ```
 
 # Screenshots
-<img src="./screenshots/repoCreated.png" width="400" />
-<img src="./screenshots/overview.png" width="400" />
-<img src="./screenshots/hover.png" width="400" />
-<img src="./screenshots/click.png" width="400" />
+<img src="https://github.com/raksooo/Ghitto/raw/master/screenshots/repoCreated.png" width="400" />
+<img src="https://github.com/raksooo/Ghitto/raw/master/screenshots/overview.png" width="400" />
+<img src="https://github.com/raksooo/Ghitto/raw/master/screenshots/hover.png" width="400" />
+<img src="https://github.com/raksooo/Ghitto/raw/master/screenshots/click.png" width="400" />
 

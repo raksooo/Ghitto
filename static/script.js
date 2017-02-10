@@ -1,11 +1,33 @@
-window.onload = function() {
-    loadContent();
-};
-
 let replacedTd;
 let replacedText;
+let readOnly = true;
 
 let currentDir = '';
+
+window.onload = function() {
+    displayWriteActions(() => {
+        loadContent();
+    });
+};
+
+function displayWriteActions(callback) {
+    let request = new XMLHttpRequest();
+    request.open('GET', '/isReadOnly', true);
+
+    request.onload = function() {
+        if (this.status === 200) {
+            readOnly = JSON.parse(this.response);
+            if (!readOnly) {
+                document.querySelectorAll('.writeaction').forEach(element => {
+                    element.classList.add('show');
+                });
+            }
+
+            callback && callback();
+        }
+    };
+    request.send();
+}
 
 function loadContent(relative) {
     if (typeof relative === 'undefined') {
@@ -54,7 +76,9 @@ function displayDirs(dirs, notRoot) {
         addNavLink(dir, onclick);
     });
 
-    addNavLink('+', newDirectory)
+    if (!readOnly) {
+        addNavLink('+', newDirectory)
+    }
 }
 
 function addNavLink(text, onclick) {

@@ -5,7 +5,7 @@ const fs = require('fs'),
 
 app.use("/", serveStatic(__dirname + "/static/"))
 
-let path, ssh
+let path, ssh, readOnly
 
 app.get('/getRepos', (req, res) => {
     let relative = req.query.path || ''
@@ -13,17 +13,29 @@ app.get('/getRepos', (req, res) => {
 })
 
 app.get('/newRepo', (req, res) => {
-    let path = req.query.path
-    let name = req.query.name
-    let repo = newRepo(path, name)
-    res.send(JSON.stringify(repo))
+    if (readOnly) {
+        res.end()
+    } else {
+        let path = req.query.path
+        let name = req.query.name
+        let repo = newRepo(path, name)
+        res.send(JSON.stringify(repo))
+    }
 })
 
 app.get('/newDirectory', (req, res) => {
-    let path = req.query.path
-    let name = req.query.name
-    newDirectory(path, name)
-    res.end()
+    if (readOnly) {
+        res.end()
+    } else {
+        let path = req.query.path
+        let name = req.query.name
+        newDirectory(path, name)
+        res.end()
+    }
+})
+
+app.get('/isReadOnly', (req, res) => {
+    res.send(JSON.stringify(readOnly))
 })
 
 function getContent(relative) {
@@ -92,9 +104,10 @@ function newDirectory(relative, name) {
     }
 }
 
-function start(port, _path, _ssh) {
+function start(port, _path, _ssh, _readOnly) {
     path = _path
     ssh = _ssh
+    readOnly = _readOnly
     app.listen(port, () => {
         console.log('Listening...')
     })
