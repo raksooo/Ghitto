@@ -198,7 +198,7 @@ function selectText(element) {
         range.select();
     } else if (window.getSelection) {
         let range = document.createRange();
-        range.selectNode(element);
+        range.selectNode(element.firstChild);
         window.getSelection().addRange(range);
     }
 }
